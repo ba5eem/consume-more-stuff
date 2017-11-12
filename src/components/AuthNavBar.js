@@ -5,7 +5,7 @@ import Logout from '../containers/Logout';
 const AuthNav = () => {
   return (
 
-      <div id="nav">
+      <div>
         <Link to="/">Home</Link>
         <br></br>
         <Link to="/new-item">New Item</Link>
