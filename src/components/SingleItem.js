@@ -36,25 +36,28 @@ const SingleItem = ({item,backToItems,edit,auth,editNow, categories, conditions,
                 <b>Updated At: </b>{item ? <Moment date={item[0].updatedAt}/> : null}<br/>
             </div>
         </ol>
-            :   <EditItemForm
-                    id={item[0].id}
-                    name={item[0].name}
-                    image={item[0].image}
-                    description={item[0].description}
-                    price={item[0].price}
-                    manufacturer={item[0].manufacturer}
-                    model={item[0].model}
-                    dimensions={item[0].dimensions}
-                    notes={item[0].notes}
-                    closeEdit={closeEdit}
-                />
+            :   <div className="blank-space-div">
+                    <EditItemForm
+                        id={item[0].id}
+                        name={item[0].name}
+                        image={item[0].image}
+                        description={item[0].description}
+                        price={item[0].price}
+                        manufacturer={item[0].manufacturer}
+                        model={item[0].model}
+                        dimensions={item[0].dimensions}
+                        notes={item[0].notes}
+                        closeEdit={closeEdit}
+                    />
+                </div>
             }
-
-            {auth ? <div className="delete-button"><button onClick={(e)=>destroyItem(item,e)}>
-            Delete Item</button></div> : null}
-            {auth ? <div className="submit-changes-button"><button onClick={(e)=>editNow(item,e)}>
-                {edit ? 'Submit changes' : 'Edit item'}</button></div> : null}
-
+            {auth ?
+                <div className="submit-changes-button">
+                    <button onClick={(e)=>editNow(item,e)}>
+                    {edit ? 'Submit changes' : 'Edit item'}
+                    </button>
+                </div>
+            : null}
     </div>
   )
 }

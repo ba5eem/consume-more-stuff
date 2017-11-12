@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { loadConditions } from '../../actions/conditions';
 import { loadCategories } from '../../actions/categories';
 import { loadItemStatuses } from '../../actions/itemStatuses';
-import { editItemImage } from '../../actions/items';
+import { editItemImage, deleteItem } from '../../actions/items';
 import { editHelper } from '../../lib/editItem';
 import Select from '../../components/Select';
 
@@ -20,6 +20,7 @@ class EditItemForm extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
     this.handleSubmitImage = this.handleSubmitImage.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleChange(e){
@@ -57,29 +58,22 @@ class EditItemForm extends Component {
     return false;
   }
 
+  handleDelete(id, event){
+    event.preventDefault();
+    this.props.deleteItem(id);
+
+    this.props.closeEdit();
+  }
+
 
 
   render(){
     return (
       <div id="edit-item-form">
-
-        <form onSubmit={this.handleSubmitImage} >
-          <div className="img-container-large">
-            <img alt='Preview' className="fullsize" src={this.state.imageUrl} />
-          </div>
-          <div className="select-save-buttons">
-            <div className="select-image-button">
-              <input type="file" accept="image/*" id="image-upload" placeholder="Select new image" onChange={this.handleChangeImage}/>
-            </div>
-            <div className="submit-changed-image">
-              <input type="submit" className="button" value="Save image" />
-            </div>
-          </div>
-          <br />
-          <br />
-        </form>
-
         <form>
+          <h2>
+            Modify item listing
+          </h2>
           <br />
 
           Name:
@@ -131,6 +125,34 @@ class EditItemForm extends Component {
           <br />
           <textarea cols="50" rows="10" name="notes" onChange={this.handleChange} defaultValue={this.props.notes} />
         </form>
+
+        <form onSubmit={this.handleSubmitImage} >
+          <h2>
+            Upload new image
+          </h2>
+          <div className="img-container-large">
+            <img alt='Preview' className="fullsize" src={this.state.imageUrl} />
+          </div>
+          <div className="select-save-buttons">
+            <div className="select-image-button">
+              <input type="file" accept="image/*" id="image-upload" placeholder="Select new image" onChange={this.handleChangeImage}/>
+            </div>
+            <div className="submit-changed-image">
+              <input type="submit" className="button" value="Save image" />
+            </div>
+          </div>
+          <br />
+          <br />
+        </form>
+        <div className="delete-button">
+          <h2>
+            Delete listing
+          </h2>
+          <button onClick={(event)=>this.handleDelete(this.props.id, event)}>
+            Delete Item
+          </button>
+        </div>
+
       </div>
 
   )}
@@ -149,6 +171,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     editItemImage: (image) => {
       dispatch(editItemImage(image))
+    },
+    deleteItem: (item) => {
+      dispatch(deleteItem(item))
     }
   }
 }
