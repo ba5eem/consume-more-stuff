@@ -30,6 +30,9 @@ const ItemStatus = db.itemstatus;
 route.get('/', ( req, res ) => {
   let value = req.isAuthenticated();
   item.findAll({
+    where: {
+      deletedAt: null
+    },
     include:[
       { model: User, as: 'seller' },
       { model: Category, as: 'itemcategory'},
@@ -162,31 +165,21 @@ route.delete('/:id', ( req, res ) => {
 
   let id = req.params.id;
 
-  let data = req.body;
+  let timestamp = Math.floor(Date.now()/1000);
 
-  return item.update({
-    notes : 'deprecated'
-  }, {where     : [{id: id}],
-      returning : true,
-      plain     : true
-  }).then((data) => {
-      return item.findOne({
-        where: {
-          id: id
-        },
-        include: [
-        { model: User, as: 'seller' },
-        { model: Category, as: 'itemcategory'},
-        { model: Condition, as: 'itemcondition'},
-        { model: ItemStatus, as: 'itemstatus'}
-        ]
-      })
-    .then((item) => {
-      return res.json(item);
+  return item.findById(id)
+  .then(item => {
+    return item.update({deletedAt : timestamp}, {
+      where: [{id: id}],
+      returning: true,
+      plain: true
+    })
+    .then(item => {
+      return res.json(item)
     })
   })
   .catch((err) => {
-    console.log(err)
+    console.log(err);
   })
 });
 

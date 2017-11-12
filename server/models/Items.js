@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes){
     image:{
       type: DataTypes.STRING
     },
-    deleted:{
+    deletedAt:{
       type: DataTypes.DATEONLY,
       defaultValue: null
     },
