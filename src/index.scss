@@ -89,11 +89,38 @@ body {
   width: 400px;
 }
 
+.blank-space-div{
+  height: 900px;
+  width: 800px;
+}
+#edit-item-form{
+  display: flex;
+  justify-content: space-around;
+}
+
+#edit-item-form{
+  .img-container-large{
+    height: 200px;
+    width: 200px;
+    border: black solid 1px;
+  }
+}
+
+.back-to-list{
+  text-align: left;
+  margin-top: 2%;
+  margin-bottom: 4%;
+}
 
 .fullsize {
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+.edit-delete-buttons{
+  display: flex;
+  justify-content: space-around;
 }
 
 .img-container-small{
