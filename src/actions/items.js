@@ -60,9 +60,9 @@ export const editItemImage = (newInfo) => {
   }
 }
 
-export const deleteItem = (itemToDelete) => {
+export const deleteItem = (id) => {
   return function(dispatch){
-    return axios.delete(`/api/items/${itemToDelete[0].id}`)
+    return axios.delete(`/api/items/${id}`)
     .then ( item => {
       dispatch ({
         type: DELETE_ITEM,
